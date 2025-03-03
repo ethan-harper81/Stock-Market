@@ -3,6 +3,7 @@ import pandas as pd
 import csv
 import numpy as np
 from utils import *
+import os
 
 CONTEXT = 30
 
@@ -41,14 +42,16 @@ def create_data():
         data_x = data_points[:CONTEXT]
         data_y = data_points[CONTEXT:]
 
-        data_x = data_x.reshape(-1, data_x.shape[-1])
+        #data_x = data_x.reshape(-1, data_x.shape[-1])
         data_y = data_y.reshape(-1, data_y.shape[-1])
 
-        '''
-        Need to think of better way to store data
-        '''
-        np.savetxt('./Data/datax.csv', data_x, delimiter=',')
-        np.savetxt('./Data/datay.csv', data_y, delimiter=',')
+        os.mkdir(f'./Data/{cur_stock}_data')
+
+        #np.savetxt('./Data/datax.csv', data_x, delimiter=',')
+        np.savetxt(f'./Data/{cur_stock}_data/{cur_stock}_outputs.csv', data_y, delimiter=',')
+
+        for i in range(data_x.shape[1]):
+          np.savetxt(f'./Data/{cur_stock}_data/{cur_stock}_{i}.csv', data_x[:,i], delimiter=',')
         
       break
 
